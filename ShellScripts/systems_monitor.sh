@@ -16,11 +16,11 @@ echo "Report Generated on: $(date)"
 echo "------------------------------------"
 
 # 1. Check CPU Usage
-CPU_USAGE=$(top -bn1 | grep "Cpu(s)" | awk '{print $2 + $4}' | cut -d. -f1)
+CPU_USAGE=$(top -bn1 | awk '/Cpu/ {print $2 + $4}' | cut -d. -f1)
 echo "CPU Usage: $CPU_USAGE%"
 
 if [ "$CPU_USAGE" -gt "$THRESHOLD_CPU" ]; then
-    echo "[ALERT] CPU usage is dangerously high!"
+    echo "CPU usage is high!"
 fi
 
 # 2. Check Memory Usage
@@ -28,7 +28,7 @@ MEM_USAGE=$(free | grep Mem | awk '{print $3/$2 * 100.0}' | cut -d. -f1)
 echo "Memory Usage: $MEM_USAGE%"
 
 if [ "$MEM_USAGE" -gt "$THRESHOLD_MEM" ]; then
-    echo "[ALERT] Memory usage is above $THRESHOLD_MEM%!"
+    echo "Memory usage is above $THRESHOLD_MEM%!"
 fi
 
 # 3. Check Disk Usage
@@ -36,7 +36,7 @@ DISK_USAGE=$(df -h / | grep / | awk '{ print $5 }' | sed 's/%//g')
 echo "Disk Usage (Root): $DISK_USAGE%"
 
 if [ "$DISK_USAGE" -gt "$THRESHOLD_DISK" ]; then
-    echo "[ALERT] Disk space is running low!"
+    echo "Disk space is running low!"
 fi
 
 echo "------------------------------------"
