@@ -3,7 +3,7 @@
 # 1. Setup the directory
 LOG_DIR=$1
 
-# 2. Check if the user gave us a directory
+# 2.First, let's make sure the user actually typed a folder name
 if [ -z "$LOG_DIR" ]; then
     echo "Error: Please provide a directory path."
     exit 1
